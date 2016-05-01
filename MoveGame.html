@@ -1,0 +1,137 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>MoveGame</title>
+    <style>
+        canvas{
+            padding: 0;
+            margin: auto;
+            display: block;
+        }
+        h1,p{
+            font-family: "Microsoft JhengHei";
+            text-align: center;
+        }
+    </style>
+    <script>
+        
+        var personLocationX=350;
+        var personLocationY=250;
+        var stepDistance = 20;
+        var count = 0;
+        
+        function isOverBorder(){
+            if(personLocationX < -50){
+                personLocationX = 850;
+            }
+            if(personLocationX > 850){
+                personLocationX = -50;
+            }
+            if(personLocationY < -100){
+                personLocationY = 650;
+            }
+            if(personLocationY > 650){
+                personLocationY = -50;
+            }
+        }
+        
+        function move(){
+            if(event.keyCode==37){
+                moveLeft();                
+            }else if(event.keyCode==38){
+                moveUp();
+            }else if(event.keyCode==39){
+                moveRight();
+            }else if(event.keyCode==40){
+                moveDown();
+            }
+        }
+        
+        function moveLeft(){
+            personLocationX -= stepDistance;
+            isOverBorder();
+            
+            if(count==0){
+                count++;
+                img.src="images/Left1.png";
+                img.onload=function(){
+                    cxt.clearRect(0,0,800,600);
+                    cxt.drawImage(img,personLocationX,personLocationY,100,150);
+                }
+            }else{
+                count--;
+                img.src="images/Left2.png";
+                img.onload=function(){
+                    cxt.clearRect(0,0,800,600);
+                    cxt.drawImage(img,personLocationX,personLocationY,100,150);
+                }
+            }
+        }
+        
+        function moveUp(){
+            personLocationY -= stepDistance;
+            isOverBorder();
+            
+            img.src="images/Up.png";
+            img.onload=function(){
+                cxt.clearRect(0,0,800,600);
+                cxt.drawImage(img,personLocationX-110,personLocationY,200,150);
+            }
+        }
+        
+        function moveRight(){
+            personLocationX += stepDistance;
+            isOverBorder();   
+            
+            if(count==0){
+                count++;
+                img.src="images/Right1.png";
+                img.onload=function(){
+                    cxt.clearRect(0,0,800,600);
+                    cxt.drawImage(img,personLocationX,personLocationY,100,150);
+                }
+            }else{
+                count--;
+                img.src="images/Right2.png";
+                img.onload=function(){
+                    cxt.clearRect(0,0,800,600);
+                    cxt.drawImage(img,personLocationX,personLocationY,100,150);
+                }
+            }
+        }
+        
+        function moveDown(){
+            personLocationY += stepDistance;
+            isOverBorder();
+            
+            img.src="images/Down.png";
+            img.onload=function(){
+                cxt.clearRect(0,0,800,600);
+                cxt.drawImage(img,personLocationX,personLocationY,100,150);
+            }
+        }
+        
+        document.onkeydown = move;
+    </script>
+</head>
+<body>
+    <h1>畫布練習</h1>
+    <canvas id="myCanvas" width="800px" height="600px"style="border:2px solid black"></canvas>
+    <p>Use Up,Down,Left,Right to move</p>
+    <p>Pictures from <a href="http://yoshigreenwater.deviantart.com/art/Paper-Mario-Flash-Sprite-Sheet-510504403" target="_blank" title="by YoshiGreenwater On deviantart.com">here</a> by YoshiGreenwater</p>
+    <script>
+        var c=document.getElementById("myCanvas");
+        var cxt=c.getContext("2d");
+        
+        var imgInit=new Image();
+        var img=new Image();
+        imgInit.src="images/Init.png";
+        
+        imgInit.onload=function()
+        {
+            cxt.drawImage(imgInit,350,250,100,150);
+        }
+    </script>
+</body>
+</html>
